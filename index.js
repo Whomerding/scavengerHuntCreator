@@ -7,24 +7,26 @@ const app = express();
 const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+
 const API_URL = "https://image-charts.com";
 const questionAnswerPairs = [
 ];
 
+
+
 app.get("/", (req, res) => {
+    const huntFinalized = false;
     const data = questionAnswerPairs;
-     res.render("index.ejs", {data: data});
+     res.render("index.ejs", {data: data , huntFinalized: huntFinalized});
 });
 
 app.post("/submit", async (req, res) => {
-    console.log('Received Data:', req.body);
     const id = Date.now().toString();
-    console.log('Generated ID:', id);
     const order =  questionAnswerPairs.length + 1;
     const qrSvg = await generateQRCode(
     `http://localhost:3000/hunt/${id}`
   );
-
     const entry = {
         id: id,
         order: order,
@@ -32,28 +34,39 @@ app.post("/submit", async (req, res) => {
         Answer: req.body.answer,
         qrCode: qrSvg,
     };
-    
-console.log('New Entry:', entry);
-    // 3. Push object into the array
+  
     questionAnswerPairs.push(entry);
-
-    // Optional: Log current array to console
-     
     res.redirect("/");
 });
 
-app.set("view engine", "ejs");
 
+//finalize hunt//
 
+  app.get("/finalize", async (req, res) => {
+  const huntFinalized = true;
 
+    const data = questionAnswerPairs;
 
+  res.render("index.ejs", { data: data, huntFinalized: huntFinalized });    
 
+});
+
+   //Get by id//
+// app.get("/hunt/:id", (req, res) => {
+//   const id = req.params.id;
+//   const entry = questionAnswerPairs.find((pair) => pair.id === id);
+//   if (entry) {
+//     res.render("hunt.ejs", { entry: entry });
+//   } else {
+//     res.status(404).send("Hunt not found");
+//   }
+// });
+
+//creates QR code but getting it from charts API//
 async function generateQRCode(id) {
   const response = await axios.get(`${API_URL}/chart?chs=150x150&cht=qr&chl=http://localhost:3000/hunt/${id}&choe=UTF-8&chof=.svg` 
-
 );
-   
-  return response.data; // SVG string
+  return response.data; 
 }
 
 

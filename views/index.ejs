@@ -8,45 +8,80 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 
-<body>
+<% if (huntFinalized===true) {%>
+    <% let i=0; let nextIndex=1; %>
+        <% while (i <data.length) { %>
+            <%if (i==data.length-1){ %>
+                <h1>
+                    <%=data[data.length-1].Answer%>
+                </h1>
+                <p>
+                    <%=data[0].id%>
+                </p>
+                <%-data[0].qrCode%>
+                    <%break;}else{ console.log(data[nextIndex].Answer, nextIndex);%>
+                        <h1>
+                            <%=data[i].Answer%>
+                        </h1>
+                        <p>
+                            <%=data[nextIndex].id%>
+                        </p>
+                        <%-data[nextIndex].qrCode%>
+                            <%console.log(data[nextIndex].qrCode);%>
+                                <% } %>
+                                    <% i++; nextIndex++} %>
 
-    <h1>Welcome to the Scavenger Hunt Creator!</h1>
-    <h2>Create and manage your scavenger hunts with ease.</h2>
-    <p>Fill out the form below to add a new question and answer pair.</p>
 
-    <form id="userForm" action="/submit" method="POST">
-        <input type="text" id="Question" name="question" placeholder="Question" required>
-        <input type="text" id="Answer" name="answer" placeholder="Answer" required>
-        <button type="submit">Add Question</button>
-    </form>
+                                        <% } else { %>
 
-    <div id="responseMessage">
-        <% if (locals.data.length !==0) {%>
+                                            <body>
 
-            <ol>
-                <% data.forEach(item=> { %>
-                    <div class="break-page">
-                        <li>
-                            <strong>Question:</strong>
-                            <%= item.Question %><br>
-                                <ul>
-                                    <li><strong>Answer:</strong>
-                                        <%= item.Answer %>
-                                    </li>
-                                    <li><strong>QR:</strong>
-                                        <%- item.qrCode %>
-                                </ul>
-                        </li>
-                    </div>
-    </div>
+                                                <h1>Welcome to the Scavenger Hunt Creator!</h1>
+                                                <h2>Create and manage your scavenger hunts with ease.</h2>
+                                                <p>Fill out the form below to add a new question and answer pair.
+                                                </p>
 
-    <% }); %>
-        </ol>
-        <%} else {%>
-            <p>No response yet. Please submit a question and answer.</p>
+                                                <form id="userForm" action="/submit" method="POST">
+                                                    <input type="text" id="Question" name="question"
+                                                        placeholder="Question" required>
+                                                    <input type="text" id="Answer" name="answer" placeholder="Answer"
+                                                        required>
+                                                    <button type="submit">Add Question</button>
+                                                </form>
 
-            <%} %>
-                </div>
-</body>
+                                                <form id="finalizeForm" action="/finalize" method="GET">
+                                                    <button>Finalize Hunt</button>
+                                                </form>
+
+                                                <div id="responseMessage">
+                                                    <% if (locals.data) {%>
+
+                                                        <ol>
+                                                            <% data.forEach(item=> { %>
+                                                                <div class="break-page">
+                                                                    <li>
+                                                                        <strong>Question:</strong>
+                                                                        <%= item.Question %><br>
+                                                                            <ul>
+                                                                                <li><strong>Answer:</strong>
+                                                                                    <%= item.Answer %>
+                                                                                </li>
+                                                                                <li><strong>QR:</strong>
+                                                                                    <%- item.qrCode %>
+                                                                            </ul>
+                                                                    </li>
+                                                                </div>
+                                                </div>
+
+                                                <% }); %>
+                                                    </ol>
+                                                    <%} else {%>
+                                                        <p>No response yet. Please add a question and answer.</p>
+
+                                                        <%} %>
+                                                            </div>
+
+                                                            <%} %>
+                                            </body>
 
 </html>
