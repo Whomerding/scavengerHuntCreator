@@ -12,20 +12,24 @@
     <% let i=0; let nextIndex=1; %>
         <% while (i <data.length) { %>
             <%if (i==data.length-1){ %>
-                <h1>
-                    <%=data[data.length-1].Answer%>
-                </h1>
-                <p>
-                    <%=data[0].id%>
-                </p>
+                <div class="break-page">
+                    <h1>
+                        <%=data[data.length-1].Answer%>
+                    </h1>
+                    <p>
+                        <%=data[0].id%>
+                    </p>
+                </div>
                 <%-data[0].qrCode%>
                     <%break;}else{ console.log(data[nextIndex].Answer, nextIndex);%>
-                        <h1>
-                            <%=data[i].Answer%>
-                        </h1>
-                        <p>
-                            <%=data[nextIndex].id%>
-                        </p>
+                        <div class="break-page">
+                            <h1>
+                                <%=data[i].Answer%>
+                            </h1>
+                            <p>
+                                <%=data[nextIndex].id%>
+                            </p>
+                        </div>
                         <%-data[nextIndex].qrCode%>
                             <%console.log(data[nextIndex].qrCode);%>
                                 <% } %>
@@ -54,7 +58,7 @@
                                                 </form>
 
                                                 <div id="responseMessage">
-                                                    <% if (locals.data) {%>
+                                                    <% if (locals.data.length> 0) {%>
 
                                                         <ol>
                                                             <% data.forEach(item=> { %>
