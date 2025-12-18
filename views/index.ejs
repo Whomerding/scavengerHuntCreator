@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scavenger Hunt Creator</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 
 <body>
@@ -21,27 +22,31 @@
 
     <div id="responseMessage">
         <% if (locals.data.length !==0) {%>
+
             <ol>
                 <% data.forEach(item=> { %>
-                    <li>
-                        <strong>Question:</strong>
-                        <%= item.Question %><br>
-                            <ul>
-                                <li><strong>Answer:</strong>
-                                    <%= item.Answer %>
-                                </li>
-                                <li><strong>QR:</strong>
-                                    <%- item.qrCode %>
-                            </ul>
-                    </li>
-
-                    <% }); %>
-            </ol>
-            <%} else {%>
-                <p>No response yet. Please submit a question and answer.</p>
-
-                <%} %>
+                    <div class="break-page">
+                        <li>
+                            <strong>Question:</strong>
+                            <%= item.Question %><br>
+                                <ul>
+                                    <li><strong>Answer:</strong>
+                                        <%= item.Answer %>
+                                    </li>
+                                    <li><strong>QR:</strong>
+                                        <%- item.qrCode %>
+                                </ul>
+                        </li>
+                    </div>
     </div>
+
+    <% }); %>
+        </ol>
+        <%} else {%>
+            <p>No response yet. Please submit a question and answer.</p>
+
+            <%} %>
+                </div>
 </body>
 
 </html>

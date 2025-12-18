@@ -25,7 +25,6 @@ app.post("/submit", async (req, res) => {
     `http://localhost:3000/hunt/${id}`
   );
 
-
     const entry = {
         id: id,
         order: order,
@@ -34,7 +33,7 @@ app.post("/submit", async (req, res) => {
         qrCode: qrSvg,
     };
     
-
+console.log('New Entry:', entry);
     // 3. Push object into the array
     questionAnswerPairs.push(entry);
 
@@ -51,18 +50,9 @@ app.set("view engine", "ejs");
 
 async function generateQRCode(id) {
   const response = await axios.get(`${API_URL}/chart?chs=150x150&cht=qr&chl=http://localhost:3000/hunt/${id}&choe=UTF-8&chof=.svg` 
-//     {
-//     params: {
-//       chs: "200x200",
-//       cht: "qr",
-//       chl: id,
-//       choe: "UTF-8",
-//       chof: "svg",
-//     },
-//     responseType: "text",
-//   }
+
 );
-    console.log(response.data);
+   
   return response.data; // SVG string
 }
 

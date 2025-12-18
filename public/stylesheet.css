@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    line-height: 1.6;
+    background-color: #135789;
+    color: #333;
+}
+
+
+@media print {
+    .break-page {
+        page-break-before: always;
+    }
+}
