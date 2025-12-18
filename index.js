@@ -52,15 +52,19 @@ app.post("/submit", async (req, res) => {
 });
 
    //Get by id//
-// app.get("/hunt/:id", (req, res) => {
-//   const id = req.params.id;
-//   const entry = questionAnswerPairs.find((pair) => pair.id === id);
-//   if (entry) {
-//     res.render("hunt.ejs", { entry: entry });
-//   } else {
-//     res.status(404).send("Hunt not found");
-//   }
-// });
+app.get("/hunt/:id", (req, res) => {
+  const { id } = req.params;
+
+  // Find the current clue by ID
+  const clue = questionAnswerPairs.find(item => item.id === id);
+
+  if (!clue) {
+    return res.status(404).send("Clue not found");
+  }
+
+  res.render("hunt.ejs", { clue });
+});
+
 
 //creates QR code but getting it from charts API//
 async function generateQRCode(id) {
