@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scavenger Hunt Creator</title>
+</head>
+
+<body>
+
+    <h1>Welcome to the Scavenger Hunt Creator!</h1>
+    <h2>Create and manage your scavenger hunts with ease.</h2>
+    <p>Fill out the form below to add a new question and answer pair.</p>
+
+    <form id="userForm" action="/submit" method="POST">
+        <input type="text" id="Question" name="question" placeholder="Question" required>
+        <input type="text" id="Answer" name="answer" placeholder="Answer" required>
+        <button type="submit">Add Question</button>
+    </form>
+
+    <div id="responseMessage">
+        <% if (locals.data.length !==0) {%>
+            <ol>
+                <% data.forEach(item=> { %>
+                    <li>
+                        <strong>Question:</strong>
+                        <%= item.Question %><br>
+                            <ul>
+                                <li><strong>Answer:</strong>
+                                    <%= item.Answer %>
+                                </li>
+                                <li><strong>QR:</strong>
+                                    <%- item.qrCode %>
+                            </ul>
+                    </li>
+
+                    <% }); %>
+            </ol>
+            <%} else {%>
+                <p>No response yet. Please submit a question and answer.</p>
+
+                <%} %>
+    </div>
+</body>
+
+</html>
