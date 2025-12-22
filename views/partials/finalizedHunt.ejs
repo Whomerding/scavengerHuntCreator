@@ -1,0 +1,19 @@
+<% let i=0; let nextIndex=1; %>
+    <% while (i <data.length) { %>
+        <%if (i==data.length-1){ %>
+            <div class="break-page">
+                <h1>
+                    <%=data[data.length-1].Answer%>
+                </h1>
+                <%-data[0].qrCode%>
+            </div>
+            <%break;}else{ %>
+                <div class="break-page">
+                    <h1>
+                        <%=data[i].Answer%>
+                    </h1>
+
+                    <%-data[nextIndex].qrCode%>
+                </div>
+                <% } %>
+                    <% i++; nextIndex++} %>

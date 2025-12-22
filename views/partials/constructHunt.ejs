@@ -1,0 +1,57 @@
+<body>
+
+    <h2>Welcome to the Scavenger Hunt Creator!</h2>
+    <ul>
+        <li>
+            <strong>Instructions:</strong> Use the form below to add question and answer pairs to your scavenger hunt.
+        </li>
+        <li>
+            Once you have added all your questions, click the "Finalize Hunt" button to complete the process.
+        </li>
+    </ul>
+
+
+    <form id="userForm" action="/submit" method="POST">
+        <div class="mb-3">
+            <label for="Question" class="form-label">Question</label>
+            <input type="text" class="form-control mx-5" id="Question" name="question" placeholder="Question" required>
+        </div>
+        <div class="mb-3">
+            <label for="Answer" class="form-label">Answer</label>
+            <input type="text" class="form-control mx-5" id="Answer" name="answer" placeholder="Answer" required>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button type="submit" class="btn btn-lg m-3">Add Question</button>
+        </div>
+    </form>
+    <form id="finalizeForm" action="/finalize" method="GET">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button class="btn btn-light btn-lg m-3">Finalize Hunt</button>
+        </div>
+    </form>
+
+    <div id="responseMessage" class="mx-5">
+        <% if (locals.data.length> 0) {%>
+            <ol style="column-count: 3; column-gap: 2rem;">
+                <div>
+                    <% data.forEach(item=> { %>
+                        <li class="text-break m-3">
+                            <strong>Question:</strong>
+                            <div>
+                                <%= item.Question %><br>
+                            </div>
+                            <ul>
+                                <li><strong>Answer:</strong>
+                                    <%= item.Answer %>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <% }); %>
+                </div>
+            </ol>
+            <%} else {%>
+                <p>No response yet. Please add a question and answer.</p>
+
+                <%} %>
+    </div>

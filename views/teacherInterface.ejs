@@ -1,0 +1,9 @@
+<%-include ('partials/header.ejs') %>
+
+    <% if (huntFinalized===true) {%>
+        <%-include ('partials/finalizedHunt.ejs') %>
+            <% } else { %>
+                <%-include ('partials/constructHunt.ejs') %>
+                    <%} %>
+
+                        <%-include ('partials/footer.ejs') %>

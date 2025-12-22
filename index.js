@@ -1,31 +1,47 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import axios from "axios";
 import bodyParser from "body-parser";
 
 
+// index.js or app.js
+
+
+
 const app = express();
 const port = 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(
+  "/bootstrap",
+  express.static(path.join("node_modules", "bootstrap", "dist"))
+);
 
 const API_URL = "https://image-charts.com";
 const questionAnswerPairs = [
 ];
 
-
-
 app.get("/", (req, res) => {
+  
+     res.render("index.ejs");
+});
+
+app.get("/teacherInterface", (req, res) => {
     const huntFinalized = false;
     const data = questionAnswerPairs;
-     res.render("index.ejs", {data: data , huntFinalized: huntFinalized});
+     res.render("teacherInterface.ejs", {data: data , huntFinalized: huntFinalized});
 });
 
 app.post("/submit", async (req, res) => {
     const id = Date.now().toString();
     const order =  questionAnswerPairs.length + 1;
     const qrSvg = await generateQRCode(
-    `http://localhost:3000/hunt/${id}`
+    `${id}`
   );
     const entry = {
         id: id,
@@ -36,7 +52,7 @@ app.post("/submit", async (req, res) => {
     };
   
     questionAnswerPairs.push(entry);
-    res.redirect("/");
+    res.redirect("teacherInterface");
 });
 
 
@@ -47,7 +63,7 @@ app.post("/submit", async (req, res) => {
 
     const data = questionAnswerPairs;
 
-  res.render("index.ejs", { data: data, huntFinalized: huntFinalized });    
+  res.render("teacherInterface.ejs", { data: data, huntFinalized: huntFinalized });    
 
 });
 
